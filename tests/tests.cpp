@@ -75,6 +75,21 @@ int m_sub_01() {
 }
 
 int m_zeros_01() {
+    int f = 4;
+	
+	Matrix A(f);
+	A(1,1) = 0; A(1,2) = 0; A(1,3) = 0; A(1,4) = 0;
+	A(2,1) = 0; A(2,2) = 0; A(2,3) = 0; A(2,4) = 0;
+	A(3,1) = 0; A(3,2) = 0; A(3,3) = 0; A(3,4) = 0;
+	
+	Matrix B = zeros(4);
+    
+    _assert(m_equals(A, B, 1e-10));
+    
+    return 0;
+}
+
+int m_zeros_02() {
     int f = 3;
     int c = 4;
 	
@@ -90,11 +105,60 @@ int m_zeros_01() {
     return 0;
 }
 
+int m_eye_01() {
+    int f = 3;
+	
+	Matrix A(f);
+	A(1,1) = 1; A(1,2) = 0; A(1,3) = 0;
+	A(2,1) = 0; A(2,2) = 1; A(2,3) = 0;
+	A(3,1) = 0; A(3,2) = 0; A(3,3) = 1;
+	
+	Matrix B = eye(3);
+    
+    _assert(m_equals(A, B, 1e-10));
+    
+    return 0;
+}
+/*
+int m_assign_row_01(){
+	int f = 3;
+	bool b = true;
+	
+	Matrix A(f);
+	A(1,1) = 1; A(1,2) = 0; A(1,3) = 0;
+	A(2,1) = 0; A(2,2) = 1; A(2,3) = 0;
+	A(3,1) = 0; A(3,2) = 0; A(3,3) = 1;
+	
+	double *d1 = (double *) malloc(A.n_row*sizeof(double));
+	d1[0] = 5;
+	d1[1] = 4;
+	d1[2] = 1;
+	
+	cout << sizeof(d1);
+	
+	assign_row(A, d1, 2);
+	double *d2 = extract_row(A, 2);
+	
+	for(int i = 0; i<sizeof(d1); i++){
+		if(d1[i]!=d2[i]){
+			printf("bruh");
+			b==false;
+		}
+	}
+    
+    _assert(b==true);
+    
+    return 0;
+}
+*/
 int all_tests()
 {
     _verify(m_sum_01);
     _verify(m_sub_01);
-    _verify(m_zeros_01);
+	_verify(m_zeros_01);
+    _verify(m_zeros_02);
+	_verify(m_eye_01);
+	//_verify(m_assign_row_01);
 
     return 0;
 }
