@@ -12,7 +12,7 @@ Matrix::Matrix(const int n) {
         exit(EXIT_FAILURE);
 	}
 	
-	this->n_row = n;
+	this->n_row = 1;
 	this->n_column = n;
 	this->data = (double **) malloc(n_row*sizeof(double *));
 	
@@ -21,9 +21,7 @@ Matrix::Matrix(const int n) {
         exit(EXIT_FAILURE);
 	}
 	
-	for(int i = 0; i < n; i++) {
-		this->data[i] = (double *) malloc(n_column*sizeof(double));
-	}
+	this->data[0] = (double *) malloc(n_column*sizeof(double));
 }
 
 Matrix::Matrix(const int n_row, const int n_column) {
@@ -44,6 +42,15 @@ Matrix::Matrix(const int n_row, const int n_column) {
 	for(int i = 0; i < n_row; i++) {
 		this->data[i] = (double *) malloc(n_column*sizeof(double));
 	}
+}
+
+double& Matrix::operator () (const int n) {
+	if (n <= 0 || this->n_column <= 0 || n > this->n_column) {
+		cout << "Matrix get: error in column\n";
+        exit(EXIT_FAILURE);
+	}
+	
+	return this->data[(n-1)/this->n_column][(n-1)%this->n_column];
 }
 
 double& Matrix::operator () (const int row, const int column) {
@@ -139,39 +146,39 @@ Matrix& eye(const int n){
 	return (*m_aux);
 }
 
-void assign_row(Matrix &m, double *d, const int i){
-	if (sizeof(d)>m.n_row || i>m.n_row) {
+void assign_row(Matrix &m1, Matrix &m2, const int i){
+	if (m2.n_column!=m1.n_column || i>m1.n_row) {
 		cout << "error in assign_row\n";
         exit(EXIT_FAILURE);
 	}
 	
-	for(int j = 1; j <=m.n_column; j++){
-		m(i, j) = d[j-1];
+	for(int j = 1; j <=m1.n_column; j++){
+		m1(i, j) = m2(1,j);
 	}
 }
 
-void assign_column(Matrix &m, double *d, const int j){
-	if (sizeof(d)>m.n_column || j>m.n_column) {
+void assign_column(Matrix &m1, Matrix &m2, const int j){
+	if (m2.n_row!=m1.n_row || j>m1.n_column) {
 		cout << "error in assign_column\n";
         exit(EXIT_FAILURE);
 	}
 	
-	for(int i = 1; i <=m.n_column; i++){
-		m(i, j) = d[i-1];
+	for(int i = 1; i <=m1.n_column; i++){
+		m1(i, j) = m2(1,i);
 	}
 }
 
-double* extract_row(Matrix &m, const int i){
-	if (i>m.n_row) {
+Matrix& extract_row(Matrix &m1, const int i){
+	if (i>m1.n_row) {
 		cout << "error in extract_row\n";
         exit(EXIT_FAILURE);
 	}
 	
-	double *d = (double *) malloc(m.n_row*sizeof(double));
+	Matrix *m2 = new Matrix(m1.n_column);
 	
-	for(int j = 1; j <=m.n_column; j++){
-		d[j-1] = m(i, j);
+	for(int j = 1; j <=m1.n_column; j++){
+		(*m2)(1,j) = m1(i,j);
 	}
 	
-	return d;
+	return (*m2);
 }

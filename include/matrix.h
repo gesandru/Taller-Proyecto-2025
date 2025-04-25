@@ -19,6 +19,7 @@ public:
     Matrix(const int n_row, const int n_column);
 	
 	// Member operators
+	double& operator () (const int n);
 	double& operator () (const int row, const int column);
 	Matrix& operator + (Matrix &m);
 	Matrix& operator - (Matrix &m);
@@ -36,9 +37,9 @@ ostream& operator << (ostream &o, Matrix &m);
 Matrix& zeros(const int n);
 Matrix& zeros(const int n_row, const int n_column);
 Matrix& eye(const int n);
-void assign_row(Matrix &m, double *d, const int i);
-void assign_column(Matrix &m, double *d, const int j);
-double* extract_row(Matrix &m, const int i);
-double* extract_column(Matrix &m, const int j);
+void assign_row(Matrix &m1, Matrix &m2, const int i);
+void assign_column(Matrix &m1, Matrix &m2, const int j);
+Matrix& extract_row(Matrix &m, const int i);
+Matrix& extract_column(Matrix &m, const int j);
 
 #endif
