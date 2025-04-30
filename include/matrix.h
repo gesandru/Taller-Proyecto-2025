@@ -25,7 +25,7 @@ public:
 	Matrix& operator - (Matrix &m);
 	Matrix& operator * (const double d);
 	Matrix& operator * (Matrix &m);
-	
+	Matrix& operator / (Matrix &m);
 	
 	// Non-member operators
 	friend ostream& operator << (ostream &o, Matrix &m);
@@ -42,5 +42,8 @@ void assign_row(Matrix &m1, Matrix &m2, const int i);
 void assign_column(Matrix &m1, Matrix &m2, const int j);
 Matrix& extract_row(Matrix &m, const int i);
 Matrix& extract_column(Matrix &m, const int j);
+Matrix& inv(Matrix &m);
+double& det(Matrix &m);
+Matrix& transpose(Matrix &m);
 
 #endif

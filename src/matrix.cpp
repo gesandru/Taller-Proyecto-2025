@@ -130,6 +130,11 @@ Matrix& Matrix::operator * (Matrix &m) {
 	return *m_aux;
 }
 
+Matrix& Matrix::operator / (Matrix &m){
+	Matrix *m_aux = new Matrix(3,3);
+	return *m_aux;
+}
+
 ostream& operator << (ostream &o, Matrix &m) {
 	for (int i = 1; i <= m.n_row; i++) {
         for (int j = 1; j <= m.n_column; j++)
@@ -210,6 +215,111 @@ Matrix& extract_row(Matrix &m1, const int i){
 	for(int j = 1; j <=m1.n_column; j++){
 		(*m2)(1,j) = m1(i,j);
 	}
+	
+	return (*m2);
+}
+
+//Sacado de aquí: https://www.geeksforgeeks.org/finding-inverse-of-a-matrix-using-gauss-jordan-method/
+Matrix& inv(Matrix &m)
+{
+	if (m.n_row!=m.n_column) {
+		cout << "error in inv\n";
+        exit(EXIT_FAILURE);
+	}
+	
+	int order = 2*m.n_row;
+	
+	Matrix *m_aug = new Matrix(order, m.n_column);
+	
+	Matrix m_eye = eye(m.n_row);
+	
+	// Create the augmented matrix
+    // Add the identity matrix
+    // of order at the end of original matrix.
+    for (int i = 1; i <= order; i++) {
+ 
+        for (int j = 1; j <= 2 * order; j++) {
+ 
+            // Add '1' at the diagonal places of
+            // the matrix to create a identity matrix
+            if (j == (i + order))
+                (*m_aug)(i,j) = 1;
+        }
+    }
+ 
+    // Interchange the row of matrix,
+    // interchanging of row will start from the last row
+    for (int i = order ; i > 0; i--) {
+ 
+        // Swapping each and every element of the two rows
+        // if (matrix[i - 1][0] < matrix[i][0])
+        // for (int j = 0; j < 2 * order; j++) {
+        //
+        //        // Swapping of the row, if above
+        //        // condition satisfied.
+        // temp = matrix[i][j];
+        // matrix[i][j] = matrix[i - 1][j];
+        // matrix[i - 1][j] = temp;
+        //    }
+ 
+        // Directly swapping the rows using pointers saves
+        // time
+ 
+        if (matrix[i - 1][0] < matrix[i][0]) {
+            float* temp = matrix[i];
+            matrix[i] = matrix[i - 1];
+            matrix[i - 1] = temp;
+        }
+    }
+ 
+    // Print matrix after interchange operations.
+    printf("\n=== Augmented Matrix ===\n");
+    PrintMatrix(matrix, order, order * 2);
+ 
+    // Replace a row by sum of itself and a
+    // constant multiple of another row of the matrix
+    for (int i = 0; i < order; i++) {
+ 
+        for (int j = 0; j < order; j++) {
+ 
+            if (j != i) {
+ 
+                temp = matrix[j][i] / matrix[i][i];
+                for (int k = 0; k < 2 * order; k++) {
+ 
+                    matrix[j][k] -= matrix[i][k] * temp;
+                }
+            }
+        }
+    }
+ 
+    // Multiply each row by a nonzero integer.
+    // Divide row element by the diagonal element
+    for (int i = 0; i < order; i++) {
+ 
+        temp = matrix[i][i];
+        for (int j = 0; j < 2 * order; j++) {
+ 
+            matrix[i][j] = matrix[i][j] / temp;
+        }
+    }
+ 
+    // print the resultant Inverse matrix.
+    printf("\n=== Inverse Matrix ===\n");
+    PrintInverse(matrix, order, 2 * order);
+ 
+    return;
+}
+
+Matrix& transpose(Matrix &m){
+	
+	Matrix *m2 = new Matrix(m.n_column, m.n_row);
+	
+	for(int i = 1; i <= m.n_row; i++) {
+        for(int j = 1; j <= m.n_column; j++) {
+            (*m2)(j,i) = m(i,j);
+        }
+    }
 	
 	return (*m2);
 }

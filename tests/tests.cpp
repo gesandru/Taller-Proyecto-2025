@@ -189,6 +189,32 @@ int m_assign_row_01(){
     
     return 0;
 }
+/*
+int m_inv_01(){
+   
+}
+*/
+int m_transpose_01(){
+	int f = 3;
+	int c = 4;
+	
+	Matrix A(c, f);
+	A(1,1) = 1; A(1,2) = 6; A(1,3) = 5;
+	A(2,1) = 3; A(2,2) = 1; A(2,3) = 4;
+	A(3,1) = 2; A(3,2) = 8; A(3,3) = 1;
+	A(4,1) = 3; A(4,2) = 7; A(4,3) = 9;
+	
+	Matrix B = transpose(A);
+	
+	Matrix C(f, c);
+	C(1,1) = 1; C(1,2) = 3; C(1,3) = 2; C(1,4) = 3;
+	C(2,1) = 6; C(2,2) = 1; C(2,3) = 8; C(2,4) = 7;
+	C(3,1) = 5; C(3,2) = 4; C(3,3) = 1; C(3,4) = 9;
+	
+	_assert(m_equals(B, C, 1e-10));
+	
+	return 0;
+}
 
 int all_tests()
 {
@@ -200,6 +226,8 @@ int all_tests()
     _verify(m_zeros_02);
 	_verify(m_eye_01);
 	_verify(m_assign_row_01);
+	//_verify(m_inv_01);
+	_verify(m_transpose_01);
 
     return 0;
 }
