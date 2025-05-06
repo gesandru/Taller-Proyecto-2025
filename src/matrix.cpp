@@ -79,6 +79,32 @@ Matrix& Matrix::operator + (Matrix &m) {
 	return *m_aux;
 }
 
+Matrix& Matrix::operator + (const double d) {
+	
+	Matrix *m_aux = new Matrix(this->n_row, this->n_column);
+	
+    for(int i = 1; i <= this->n_row; i++) {
+        for(int j = 1; j <= this->n_column; j++) {
+			(*m_aux)(i,j) = (*this)(i,j) + d;
+		}
+	}
+	
+	return *m_aux;
+}
+
+Matrix& Matrix::operator - (const double d) {
+	
+	Matrix *m_aux = new Matrix(this->n_row, this->n_column);
+	
+    for(int i = 1; i <= this->n_row; i++) {
+        for(int j = 1; j <= this->n_column; j++) {
+			(*m_aux)(i,j) = (*this)(i,j) - d;
+		}
+	}
+	
+	return *m_aux;
+}
+
 Matrix& Matrix::operator - (Matrix &m) {
 	if (this->n_row != m.n_row || this->n_column != m.n_column) {
 		cout << "Matrix sub: error in n_row/n_column\n";
@@ -130,9 +156,47 @@ Matrix& Matrix::operator * (Matrix &m) {
 	return *m_aux;
 }
 
-Matrix& Matrix::operator / (Matrix &m){
-	Matrix *m_aux = new Matrix(3,3);
+Matrix& Matrix::operator / (const double d){
+	
+	Matrix *m_aux = new Matrix(this->n_row, this->n_column);
+	
+    for(int i = 1; i <= this->n_row; i++) {
+        for(int j = 1; j <= this->n_column; j++) {
+			(*m_aux)(i,j) = (*this)(i,j) / d;
+		}
+	}
+	
 	return *m_aux;
+}
+
+Matrix Matrix::operator / (Matrix &m){
+	Matrix m_aux = inv(m);
+	Matrix m_result = (*this) * m_aux;
+	
+	return m_result;
+}
+
+void Matrix::operator = (Matrix &m) {
+	
+	this->n_row = m.n_row;
+	this->n_column = m.n_column;
+	
+	this->data = (double **) malloc(m.n_row*sizeof(double *));
+	
+    if (this->data == NULL) {
+		cout << "Matrix =: error in data\n";
+        exit(EXIT_FAILURE);
+	}
+	
+	for(int i = 0; i < n_row; i++) {
+		this->data[i] = (double *) malloc(m.n_column*sizeof(double));
+	}
+	
+    for(int i = 1; i <= this->n_row; i++) {
+        for(int j = 1; j <= this->n_column; j++) {
+			(*this)(i,j) = m(i,j);
+		}
+	}
 }
 
 ostream& operator << (ostream &o, Matrix &m) {
@@ -194,7 +258,7 @@ void assign_row(Matrix &m1, Matrix &m2, const int i){
 }
 
 void assign_column(Matrix &m1, Matrix &m2, const int j){
-	if (m2.n_row!=m1.n_row || j>m1.n_column) {
+	if (m2.n_column!=m1.n_row || j>m1.n_column) {
 		cout << "error in assign_column\n";
         exit(EXIT_FAILURE);
 	}
@@ -219,6 +283,20 @@ Matrix& extract_row(Matrix &m1, const int i){
 	return (*m2);
 }
 
+Matrix& extract_column(Matrix &m1, const int j){
+	if (j>m1.n_column) {
+		cout << "error in extract_column\n";
+        exit(EXIT_FAILURE);
+	}
+	
+	Matrix *m2 = new Matrix(m1.n_row);
+	for(int i = 1; i <=m1.n_row; i++){
+		(*m2)(1,i) = m1(i,j);
+	}
+	
+	return (*m2);
+}
+
 //Sacado de aquí: https://www.geeksforgeeks.org/finding-inverse-of-a-matrix-using-gauss-jordan-method/
 Matrix& inv(Matrix &m)
 {
@@ -227,14 +305,13 @@ Matrix& inv(Matrix &m)
         exit(EXIT_FAILURE);
 	}
 	
-	int order = 2*m.n_row;
-	
-	Matrix *m_aug = new Matrix(order, m.n_column);
-	
-	Matrix m_eye = eye(m.n_row);
+	int order = m.n_row;
+	Matrix *m_aug = new Matrix(order, 2*order);
+	Matrix temp;
+	double d;
 	
 	// Create the augmented matrix
-    // Add the identity matrix
+	// Add the identity matrix
     // of order at the end of original matrix.
     for (int i = 1; i <= order; i++) {
  
@@ -242,14 +319,25 @@ Matrix& inv(Matrix &m)
  
             // Add '1' at the diagonal places of
             // the matrix to create a identity matrix
-            if (j == (i + order))
+            if (j == (i + order)){
                 (*m_aug)(i,j) = 1;
+			} else{
+				(*m_aug)(i,j) = 0;
+			}
+		}
+    }
+
+	for (int i = 1; i <= order; i++) {
+ 
+        for (int j = 1; j <= order; j++) {
+            (*m_aug)(i,j) = m(i,j);
         }
     }
- 
+	
+
     // Interchange the row of matrix,
     // interchanging of row will start from the last row
-    for (int i = order ; i > 0; i--) {
+    for (int i = order ; i > 1; i--) {
  
         // Swapping each and every element of the two rows
         // if (matrix[i - 1][0] < matrix[i][0])
@@ -265,29 +353,25 @@ Matrix& inv(Matrix &m)
         // Directly swapping the rows using pointers saves
         // time
  
-        if (matrix[i - 1][0] < matrix[i][0]) {
-            float* temp = matrix[i];
-            matrix[i] = matrix[i - 1];
-            matrix[i - 1] = temp;
+        if ((*m_aug)(i-1,1) < (*m_aug)(i,1)) {
+            temp = extract_row((*m_aug),i);
+            assign_row((*m_aug), extract_row((*m_aug),i-1),i);
+            assign_row((*m_aug), temp,i-1);
         }
     }
  
-    // Print matrix after interchange operations.
-    printf("\n=== Augmented Matrix ===\n");
-    PrintMatrix(matrix, order, order * 2);
- 
     // Replace a row by sum of itself and a
     // constant multiple of another row of the matrix
-    for (int i = 0; i < order; i++) {
+    for (int i = 1; i <= order; i++) {
  
-        for (int j = 0; j < order; j++) {
+        for (int j = 1; j <= order; j++) {
  
             if (j != i) {
  
-                temp = matrix[j][i] / matrix[i][i];
-                for (int k = 0; k < 2 * order; k++) {
+                d = (*m_aug)(j,i) / (*m_aug)(i,i);
+                for (int k = 1; k <= 2 * order; k++) {
  
-                    matrix[j][k] -= matrix[i][k] * temp;
+                    (*m_aug)(j,k) -= (*m_aug)(i,k) * d;
                 }
             }
         }
@@ -295,20 +379,21 @@ Matrix& inv(Matrix &m)
  
     // Multiply each row by a nonzero integer.
     // Divide row element by the diagonal element
-    for (int i = 0; i < order; i++) {
+    for (int i = 1; i <= order; i++) {
  
-        temp = matrix[i][i];
-        for (int j = 0; j < 2 * order; j++) {
+        d = (*m_aug)(i,i);
+        for (int j = 1; j <= 2 * order; j++) {
  
-            matrix[i][j] = matrix[i][j] / temp;
+            (*m_aug)(i,j) = (*m_aug)(i,j) / d;
         }
     }
+	
+	Matrix *m_result = new Matrix(order,order);
+	for(int i = 1; i <= order; i++){
+		assign_column((*m_result), extract_column((*m_aug),i+order),i);
+	}
  
-    // print the resultant Inverse matrix.
-    printf("\n=== Inverse Matrix ===\n");
-    PrintInverse(matrix, order, 2 * order);
- 
-    return;
+    return (*m_result);
 }
 
 Matrix& transpose(Matrix &m){
@@ -322,4 +407,33 @@ Matrix& transpose(Matrix &m){
     }
 	
 	return (*m2);
+}
+
+double dot(Matrix &m1, Matrix &m2) {
+	if (m1.n_row!=m2.n_row || m1.n_column!=m2.n_column) {
+		cout << "error in dot\n";
+        exit(EXIT_FAILURE);
+	}
+	
+    double result = 0.0;
+
+    for (int j = 1; j <= m1.n_column; j++){
+            result += (m1(1,j) * m2(1,j));
+    }
+    return result;
+}
+
+double norm(Matrix &m){
+	if (m.n_row>1) {
+		cout << "error in norm\n";
+        exit(EXIT_FAILURE);
+	}
+	
+    double result = 0.0;
+
+    for (int j = 1; j <= m.n_column; j++){
+            result += pow(m(1,j),2);
+    }
+	result = sqrt(result);
+    return result;
 }

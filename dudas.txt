@@ -1,0 +1,8 @@
+extraer vector por filas o columnas?
+union vectores?
+precisión de los tests?
+cross de vectores?
+constantes y * o &
+tiempo de ejecución
+tests de TimeUpdate
+tests de Mjday

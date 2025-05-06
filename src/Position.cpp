@@ -1,0 +1,23 @@
+#include "../include/Position.h"
+
+
+Matrix& Position(const double lon,const double lat,const double h){
+
+double R_equ = Const::R_Earth;
+double f     = Const::f_Earth;
+
+double e2     = f*(2.0-f);   // Square of eccentricity
+double CosLat = cos(lat);    // (Co)sine of geodetic latitude
+double SinLat = sin(lat);
+
+// Position vector 
+double N = R_equ / sqrt(1.0-e2*SinLat*SinLat);
+
+Matrix *r = new Matrix(3);
+
+(*r)(1) =  (         N+h)*CosLat*cos(lon);
+(*r)(2) =  (         N+h)*CosLat*sin(lon);
+(*r)(3) =  ((1.0-e2)*N+h)*SinLat;
+
+return (*r);
+}
