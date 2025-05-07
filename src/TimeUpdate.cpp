@@ -4,6 +4,6 @@ void TimeUpdate(Matrix &P, Matrix Phi, double Qdt){
 
 
 
-P = Phi*P*transpose(P) + Qdt;
+P = Phi*P*transpose(Phi) + Qdt;
 }
 

@@ -1,6 +1,6 @@
 #include "../include/Mjday.h"
 
-double Mjday(double yr, double mon, double day, double hr = 0.0, double min = 0.0, double sec = 0.0){
+double Mjday(double yr, double mon, double day, double hr , double min, double sec){
 
 double jd = 367.0 * yr
     - floor( (7 * (yr + floor( (mon + 9) / 12.0) ) ) * 0.25 )

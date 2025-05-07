@@ -1,8 +1,29 @@
 extraer vector por filas o columnas?
-union vectores?
 precisión de los tests?
 cross de vectores?
 constantes y * o &
-tiempo de ejecución
 tests de TimeUpdate
-tests de Mjday
+
+
+para MeasUpdate z,g,s ponerlas como double porque son matrices de una componente
+AuxParam: definir un struct en el archivo globals como el resto de matrices.
+
+hpp:
+typedef struct (
+	double Mjd_UTC, Mjd_TT;
+	int n,m,sun,moon, planets;
+) Param;
+
+extern Param AuxParam;
+extern Matrix eopdata;
+extern Matrix Cnm;
+extern Matrix Snm;
+extern Matrix PC;
+
+cpp:
+#include "..\include\global.hpp"
+
+Param AuxParam;
+Matrix eopdata;
+Matrix Cnm;
+Matrix Snm;
