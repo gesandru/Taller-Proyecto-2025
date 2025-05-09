@@ -1,14 +1,12 @@
 #ifndef _NUTANGLES_
 #define _NUTANGLES_
 
-#include "../include/Matrix.h"
+#include "../include/const.h"
 #include <cmath>
+#include <tuple>
 
-class NutAngles
-{
-    public:
-        
-};
+using namespace std;
+
 tuple<double, double> NutAngles(const double Mjd_TT);
 
 #endif

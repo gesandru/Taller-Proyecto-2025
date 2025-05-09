@@ -3,6 +3,7 @@
 
 #include "../include/Matrix.h"
 #include <cmath>
+#include <tuple>
 
 class AzElPa
 {

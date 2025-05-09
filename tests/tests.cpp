@@ -13,6 +13,8 @@
 #include "../include/sign_.h"
 #include "../include/Position.h"
 #include "../include/TimeUpdate.h"
+#include "../include/NutAngles.h"
+#include "../include/timediff.h"
 
 using namespace std;
 
@@ -419,6 +421,108 @@ Matrix P = zeros(6,6);
     return 0;
 }
 
+int NutAngles_01() {
+	
+	tuple <double, double> result = NutAngles(321.3);
+
+	int i;
+		
+		double D = 5.31658395704401e-05;
+		double Az = get<0>(result);
+		
+	if(fabs(D-Az) > 1e-10) {
+		printf("%2.20lf %2.20lf\n",D,Az);
+		i=0;
+	}else{
+		i=1;
+	}
+	
+	_assert(i);
+	
+	double E = 3.49865427225745e-05;
+	double El = get<1>(result);
+		
+	if(fabs(E-El) > 1e-10) {
+		printf("%2.20lf %2.20lf\n",E,El);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+    return 0;
+}
+
+int timediff_01() {
+	
+	tuple <double, double, double, double, double> result = timediff(5216.2, 4653.1);
+
+	int i;
+		
+		double A = 563.099999999999;
+		double UT1_TAI = get<0>(result);
+		
+	if(fabs(A-UT1_TAI) > 1e-5) {
+		printf("%2.20lf %2.20lf\n",A,UT1_TAI);
+		i=0;
+	}else{
+		i=1;
+	}
+	
+	_assert(i);
+	
+	double B = -4634.1;
+	double UTC_GPS = get<1>(result);
+		
+	if(fabs(B-UTC_GPS) > 1e-5) {
+		printf("%2.20lf %2.20lf\n",B,UTC_GPS);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+		double C = 582.099999999999;
+	double UT1_GPS = get<2>(result);
+		
+	if(fabs(C-UT1_GPS) > 1e-5) {
+		printf("%2.20lf %2.20lf\n",C,UT1_GPS);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+	double D = 4685.284;
+	double TT_UTC = get<3>(result);
+		
+	if(fabs(D-TT_UTC) > 1e-5) {
+		printf("%2.20lf %2.20lf\n",D,TT_UTC);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+		double E = 4634.1;
+	double GPS_UTC = get<4>(result);
+		
+	if(fabs(E-GPS_UTC) > 1e-5) {
+		printf("%2.20lf %2.20lf\n",E,UTC_GPS);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+    return 0;
+}
+
 int all_tests()
 {
     _verify(Rx_01);
@@ -439,7 +543,8 @@ int all_tests()
 	_verify(Position_01);
 	_verify(TimeUpdate_01);
 	_verify(TimeUpdate_02);
-	
+	_verify(NutAngles_01);
+	_verify(timediff_01);
 
     return 0;
 }

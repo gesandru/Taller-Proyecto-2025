@@ -1,5 +1,4 @@
 #include "../include/NutAngles.h"
-#include "../include/const.h"
 
 tuple<double, double> NutAngles(const double Mjd_TT){
 
@@ -139,7 +138,7 @@ double dpsi = 0.0;
 double deps = 0.0;
 double arg;
 
-for(int i = 0; i<=N_coeff;i++){
+for(int i = 0; i<N_coeff;i++){
   arg =  ( C[i][0]*l+C[i][1]*lp+C[i][2]*F+C[i][3]*D+C[i][4]*Om )/Const::Arcs;
   dpsi = dpsi + ( C[i][5]+C[i][6]*T ) * sin(arg);
   deps = deps + ( C[i][7]+C[i][8]*T ) * cos(arg);
@@ -148,5 +147,5 @@ for(int i = 0; i<=N_coeff;i++){
 dpsi = 1.0e-5 * dpsi/Const::Arcs;
 deps = 1.0e-5 * deps/Const::Arcs;
 
-return tuple<double, double>(dpsi, deps);
+return tie(dpsi, deps);
 }

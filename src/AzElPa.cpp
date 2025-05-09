@@ -23,5 +23,5 @@ dAds(1)= s(2)/(rho*rho); dAds(2)= -s(1)/(rho*rho); dAds(3)= 0.0;
 Matrix dEds(3);
 dEds(1)= -s(1)*s(3)/rho / dot(s,s); dEds(2)= -s(2)*s(3)/rho / dot(s,s); dEds(3)= rho / dot(s,s);
 
-return  tuple<double, double, Matrix, Matrix>(Az, El, dAds, dEds);
+return  tie(Az, El, dAds, dEds);
 }
