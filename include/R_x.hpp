@@ -4,6 +4,6 @@
 #include "../include/Matrix.hpp"
 #include <cmath>
 
-Matrix R_x(const double angle);
+Matrix& R_x(double angle);
 
 #endif

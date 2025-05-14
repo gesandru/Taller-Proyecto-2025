@@ -1,6 +1,6 @@
 #include "../include/Cheb3D.hpp"
 
-Matrix Cheb3D(const int t,const int N,const int Ta,const int Tb,Matrix &Cx,Matrix &Cy,Matrix &Cz){
+Matrix& Cheb3D(const int t,const int N,const int Ta,const int Tb,Matrix &Cx,Matrix &Cy,Matrix &Cz){
 
 //Check validity
 if ( (t<Ta) || (Tb<t) ){
@@ -14,8 +14,8 @@ double tau = (2.0*t-Ta-Tb)/(Tb-Ta);
 Matrix f1 = zeros(1,3);
 Matrix f2 = zeros(1,3);
 
-Matrix old_f1;
-Matrix auxiliar(3);
+Matrix &old_f1 = zeros(1);
+Matrix &auxiliar = zeros(3);
 
 for (int i = N; i>=2;i--){
     old_f1 = f1;

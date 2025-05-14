@@ -19,6 +19,8 @@
 #include "../include/Legendre.hpp"
 #include "../include/IERS.hpp"
 #include "../include/AccelHarmonic.hpp"
+#include "../include/EqnEquinox.hpp"
+#include "../include/LTC.hpp"
 
 using namespace std;
 
@@ -735,6 +737,39 @@ int AccelHarmonic_01() {
     return 0;
 }
 
+int EqnEquinox_01() {
+
+	int i;
+	
+	double E = 4.08846308082239e-05;
+	double EqE = EqnEquinox(56732.6);
+		
+	if(fabs(E-EqE) > 1e-15) {
+		printf("%2.20lf %2.20lf\n",E,EqE);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+    return 0;
+}
+
+int LTC_01() {
+	
+	Matrix A(3,3);
+	A(1,1) = -0.998900090745021; A(1,2) =  -0.046889324047043; A(1,3) = 0.0;
+	A(2,1) = 0.025229786424633; A(2,2) =  -0.537479190865682; A(2,3) = 0.842899506028648;
+	A(3,1) = -0.039522988077270; A(3,2) =  0.841972393060950; A(3,3) = 0.538071020160593;
+	
+	Matrix R = LTC(45.6, 63.4);
+
+    _assert(m_equals(A, R, 1e-10));
+	
+    return 0;
+}
+
 int all_tests()
 {
     _verify(Rx_01);
@@ -762,6 +797,8 @@ int all_tests()
 	_verify(Legendre_01);
 	_verify(IERS_01);
 	_verify(AccelHarmonic_01);
+	_verify(EqnEquinox_01);
+	_verify(LTC_01);
 
     return 0;
 }

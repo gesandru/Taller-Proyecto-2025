@@ -5,6 +5,6 @@
 #include <cmath>
 #include <cstdio>
 
-Matrix Cheb3D(const int t,const int N,const int Ta,const int Tb,Matrix &Cx,Matrix &Cy,Matrix &Cz);
+Matrix& Cheb3D(const int t,const int N,const int Ta,const int Tb, Matrix &Cx, Matrix &Cy, Matrix &Cz);
 
 #endif

@@ -5,6 +5,6 @@
 #include <cmath>
 #include <tuple>
 
-tuple<double, double, Matrix, Matrix> AzElPa(Matrix& s);
+tuple<double, double, Matrix&, Matrix&> AzElPa(Matrix &s);
 
 #endif
