@@ -1,20 +1,24 @@
-#include "..\include\matrix.h"
-#include "..\include\const.h"
-#include "..\include\R_x.h"
-#include "..\include\R_y.h"
-#include "..\include\R_z.h"
-#include "../include/AzElPa.h"
-#include "../include/AccelPointMass.h"
-#include "../include/Mjday.h"
-#include "../include/Mjday_TDB.h"
-#include "../include/Cheb3D.h"
-#include "../include/Frac.h"
-#include "../include/MeanObliquity.h"
-#include "../include/sign_.h"
-#include "../include/Position.h"
-#include "../include/TimeUpdate.h"
-#include "../include/NutAngles.h"
-#include "../include/timediff.h"
+#include "..\include\Matrix.hpp"
+#include "..\include\const.hpp"
+#include "..\include\R_x.hpp"
+#include "..\include\R_y.hpp"
+#include "..\include\R_z.hpp"
+#include "../include/AzElPa.hpp"
+#include "../include/AccelPointMass.hpp"
+#include "../include/Mjday.hpp"
+#include "../include/Mjday_TDB.hpp"
+#include "../include/Cheb3D.hpp"
+#include "../include/Frac.hpp"
+#include "../include/MeanObliquity.hpp"
+#include "../include/sign_.hpp"
+#include "../include/Position.hpp"
+#include "../include/TimeUpdate.hpp"
+#include "../include/NutAngles.hpp"
+#include "../include/timediff.hpp"
+#include "../include/EccAnom.hpp"
+#include "../include/Legendre.hpp"
+#include "../include/IERS.hpp"
+#include "../include/AccelHarmonic.hpp"
 
 using namespace std;
 
@@ -523,6 +527,214 @@ int timediff_01() {
     return 0;
 }
 
+int EccAnom_01() {
+
+	int i;
+		
+		double D = 0.262936914041412;
+		double Az = EccAnom(69.3,0.3);
+		
+	if(fabs(D-Az) > 1e-10) {
+		printf("%2.20lf %2.20lf\n",D,Az);
+		i=0;
+	}else{
+		i=1;
+	}
+	
+	_assert(i);
+	
+    return 0;
+}
+
+int EccAnom_02() {
+
+	int i;
+	
+	double E = 0.876771881596796;
+	double El = EccAnom(69.3,0.9);
+		
+	if(fabs(E-El) > 1e-10) {
+		printf("%2.20lf %2.20lf\n",E,El);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+    return 0;
+}
+
+int Legendre_01() {
+	
+	tuple<Matrix, Matrix> result = Legendre(3,3,5.1);
+	
+	Matrix A(4,4);
+	A(1,1) = 1.0; A(1,2) =  0.0; A(1,3) = 0.0; A(1,4) = 0.0;
+	A(2,1) = -1.603558068184872; A(2,2) =  0.654676654509079; A(2,3) = 0.0; A(2,4) = 0.0;
+	A(3,1) = 1.756876908319470; A(3,2) =  -1.355301504740954; A(3,3) = 0.276661092784522; A(3,4) = 0.0;
+	A(4,1) = -1.574601335784816; A(4,2) =  2.012120785940833; A(4,3) = -0.677674543560851; A(4,4) = 0.112950383527956;
+	
+		Matrix pnm = get<0>(result);
+
+    _assert(m_equals(A, pnm, 1e-10));
+	
+	Matrix B(4,4);
+	B(1,1) = 0.0; B(1,2) =  0.0; B(1,3) = 0.0; B(1,4) = 0.0;
+	B(2,1) = 0.654676654509079; B(2,2) =  1.603558068184872; B(2,3) = 0.0; B(2,4) = 0.0;
+	B(3,1) = -2.347451065785884; B(3,2) =  -2.766338975069329; B(3,3) = 1.355301504740954; B(3,4) = 0.0;
+	B(4,1) = 4.928669226402895; B(4,2) =  2.785472285993957; B(4,3) = -3.043106902522991; B(4,4) = 0.829978421698789;
+	
+	Matrix dpnm = get<1>(result);
+
+    _assert(m_equals(B, dpnm, 1e-10));
+	
+    return 0;
+}
+
+int IERS_01() {
+	
+	eop19620101(21413);
+	
+	tuple< double, double, double, double, double, double, double, double, double> result = IERS(eopdata, 4.974611635416653e+04);
+
+	int i;
+		
+		double A = -5.595186212317044e-07;
+		double x_pole = get<0>(result);
+		
+	if(fabs(A-x_pole) > 1e-15) {
+		printf("%2.20lf %2.20lf\n",A,x_pole);
+		i=0;
+	}else{
+		i=1;
+	}
+	
+	_assert(i);
+	
+	double B = 2.334586344425293e-06;
+	double y_pole = get<1>(result);
+		
+	if(fabs(B-y_pole) > 1e-15) {
+		printf("%2.20lf %2.20lf\n",B,y_pole);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+		double C = 0.326067700000000;
+	double UT1_UTC = get<2>(result);
+		
+	if(fabs(C-UT1_UTC) > 1e-10) {
+		printf("%2.20lf %2.20lf\n",C,UT1_UTC);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+	double D = 0.002721300000000;
+	double LOD = get<3>(result);
+		
+	if(fabs(D-LOD) > 1e-10) {
+		printf("%2.20lf %2.20lf\n",D,LOD);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+	double E = -1.168643378314537e-07;
+	double dpsi = get<4>(result);
+		
+	if(fabs(E-dpsi) > 1e-15) {
+		printf("%2.20lf %2.20lf\n",E,dpsi);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+	double F = -2.487094184091920e-08;
+	double deps = get<5>(result);
+		
+	if(fabs(F-deps) > 1e-20) {
+		printf("%2.20lf %2.20lf\n",F,deps);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+	double G = -8.193351210751158e-10;
+	double dx_pole = get<6>(result);
+		
+	if(fabs(G-dx_pole) > 1e-20) {
+		printf("%2.20lf %2.20lf\n",G,dx_pole);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+	double H = -1.532011232306134e-09;
+	double dy_pole = get<7>(result);
+		
+	if(fabs(H-dy_pole) > 1e-20) {
+		printf("%2.20lf %2.20lf\n",H,dy_pole);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+	double I = 29.0;
+	double TAI_UTC = get<8>(result);
+		
+	if(fabs(I-TAI_UTC) > 1e-2) {
+		printf("%2.20lf %2.20lf\n",I,TAI_UTC);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+    return 0;
+}
+
+int AccelHarmonic_01() {
+	
+	Matrix A(3,1);
+	A(1,1) = 5.542555937228607e+06;
+	A(2,1) = 3.213514867349196e+06;
+	A(3,1) = 3.990892975876853e+06;
+	
+	Matrix B(3,3);
+	B(1,1) = -0.978185453896254; B(1,2) =  0.207733066362260; B(1,3) = -0.000436950239569;
+	B(2,1) = -0.207733028352522; B(2,2) =  -0.978185550768511; B(2,3) = -0.000131145697267;
+	B(3,1) = -0.000454661708585; B(3,2) =  -0.000037515816903; B(3,3) = 0.999999895937642;
+	
+	Matrix R = AccelHarmonic(A, B, 20, 20);
+	
+	Matrix C(3,1);
+	C(1,1) = -5.134836943433859;
+	C(2,1) = -2.977177178054876;
+	C(3,1) = -3.705918925034543;
+
+    _assert(m_equals(C, R, 1e-10));
+	
+    return 0;
+}
+
 int all_tests()
 {
     _verify(Rx_01);
@@ -545,6 +757,11 @@ int all_tests()
 	_verify(TimeUpdate_02);
 	_verify(NutAngles_01);
 	_verify(timediff_01);
+	_verify(EccAnom_01);
+	_verify(EccAnom_02);
+	_verify(Legendre_01);
+	_verify(IERS_01);
+	_verify(AccelHarmonic_01);
 
     return 0;
 }

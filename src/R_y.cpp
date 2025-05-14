@@ -1,4 +1,4 @@
-#include "../include/R_y.h"
+#include "../include/R_y.hpp"
 
 Matrix R_y(const double angle){
 

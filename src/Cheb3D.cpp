@@ -1,4 +1,4 @@
-#include "../include/Cheb3D.h"
+#include "../include/Cheb3D.hpp"
 
 Matrix Cheb3D(const int t,const int N,const int Ta,const int Tb,Matrix &Cx,Matrix &Cy,Matrix &Cz){
 

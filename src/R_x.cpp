@@ -1,4 +1,4 @@
-#include "../include/R_x.h"
+#include "../include/R_x.hpp"
 
 Matrix R_x(const double angle){
     

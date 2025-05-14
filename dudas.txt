@@ -1,9 +1,6 @@
-extraer vector por filas o columnas?
-precisión de los tests?
-cross de vectores?
 constantes y * o &
-tests de TimeUpdate
 
+IERS puede estar mal y dar problemas
 
 para MeasUpdate z,g,s ponerlas como double porque son matrices de una componente
 AuxParam: definir un struct en el archivo globals como el resto de matrices.

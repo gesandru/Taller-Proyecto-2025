@@ -1,4 +1,4 @@
-#include "../include/Mjday.h"
+#include "../include/Mjday.hpp"
 
 double Mjday(double yr, double mon, double day, double hr , double min, double sec){
 

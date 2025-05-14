@@ -1,4 +1,4 @@
-#include "../include/Frac.h"
+#include "../include/Frac.hpp"
 
 double Frac(const double x){
 
