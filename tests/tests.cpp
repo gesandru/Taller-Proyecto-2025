@@ -21,6 +21,10 @@
 #include "../include/AccelHarmonic.hpp"
 #include "../include/EqnEquinox.hpp"
 #include "../include/LTC.hpp"
+#include "../include/gmst.hpp"
+#include "../include/PrecMatrix.hpp"
+#include "../include/PoleMatrix.hpp"
+#include "../include/NutMatrix.hpp"
 
 using namespace std;
 
@@ -770,6 +774,67 @@ int LTC_01() {
     return 0;
 }
 
+int gmst_01() {
+	
+	int i;
+	
+	double theta = 2.963174209664897;
+	double result = gmst(4.974611635793676e+04); 
+		
+	if(fabs(result-theta) > 1e-15) {
+		printf("%2.20lf %2.20lf\n",result,theta);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+    return 0;
+}
+
+int PrecMatrix_01() {
+	
+	Matrix A(3,3);
+	A(1,1) = 0.999999279432966; A(1,2) =  0.001101008340282; A(1,3) = 0.000478449771423;
+	A(2,1) = -0.001101008340283; A(2,2) =  0.999999393890099; A(2,3) = -0.000000263386460;
+	A(3,1) = -0.000478449771421; A(3,2) =  -0.000000263390918; A(3,3) = 0.999999885542867;
+	
+	Matrix R = PrecMatrix(5.154450000000000e+04, 4.974611706231468e+04);
+
+    _assert(m_equals(A, R, 1e-15));
+	
+    return 0;
+}
+
+int PoleMatrix_01() {
+	
+	Matrix A(3,3);
+	A(1,1) = 0.999999999999844; A(1,2) = -0.000000000001306; A(1,3) = -0.000000559378724;
+	A(2,1) = 0.0; A(2,2) =  0.999999999997273; A(2,3) = -0.000002335598341;
+	A(3,1) = 0.000000559378724; A(3,2) = 0.000002335598341; A(3,3) = 0.999999999997116;
+	
+	Matrix R = PoleMatrix(-5.593787242040705e-07, 2.335598341471968e-06);
+
+    _assert(m_equals(A, R, 1e-15));
+	
+    return 0;
+}
+
+int NutMatrix_01() {
+	
+	Matrix A(3,3);
+	A(1,1) = 0.999999998058735; A(1,2) = -0.000057167988727; A(1,3) = -0.000024786115420;
+	A(2,1) = 0.000057168858923; A(2,2) = 0.999999997749543; A(2,3) = 0.000035108907184;
+	A(3,1) = 0.000024784108259; A(3,2) = -0.000035110324109; A(3,3) = 0.999999999076506;
+	
+	Matrix R = NutMatrix(4.974611706231468e+04);
+
+    _assert(m_equals(A, R, 1e-15));
+	
+    return 0;
+}
+
 int all_tests()
 {
     _verify(Rx_01);
@@ -799,6 +864,10 @@ int all_tests()
 	_verify(AccelHarmonic_01);
 	_verify(EqnEquinox_01);
 	_verify(LTC_01);
+	_verify(gmst_01);
+	_verify(PrecMatrix_01);
+	_verify(PoleMatrix_01);
+	_verify(NutMatrix_01);
 
     return 0;
 }

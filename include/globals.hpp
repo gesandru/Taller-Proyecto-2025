@@ -2,7 +2,6 @@
 #define _GLOBALS_
 
 #include "../include/Matrix.hpp"
-#include "../include/const.hpp"
 #include <cmath>
 /*
 #include <cstdio>
