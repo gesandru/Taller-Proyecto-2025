@@ -1,4 +1,4 @@
-#include "..\include\matrix.hpp"
+#include "..\include\Matrix.hpp"
 
 Matrix::Matrix() {
     this->n_row = 0;
@@ -207,6 +207,19 @@ ostream& operator << (ostream &o, Matrix &m) {
     }
 	
     return o;
+}
+
+Matrix& operator - (Matrix &m) {
+	
+	Matrix *result = new Matrix(m.n_row, m.n_column);
+	
+	for (int i = 1; i <= m.n_row; i++) {
+        for (int j = 1; j <= m.n_column; j++){
+			(*result)(i,j) = -m(i,j);
+		}
+    }
+	
+    return (*result);
 }
 
 Matrix& zeros(const int n) {
@@ -436,4 +449,52 @@ double norm(Matrix &m){
     }
 	result = sqrt(result);
     return result;
+}
+
+Matrix& extract_vector(Matrix &m, int n, int o){
+		if (n>o || m.n_row*m.n_column<n) {
+		cout << "error in extract_vector\n";
+        exit(EXIT_FAILURE);
+	}
+	
+	Matrix *m2 = new Matrix(o+1-n);
+	
+	n=n-1;
+	o=o-1;
+	int k=1;
+	
+	for(int i = (n/m.n_row)+1; i <= m.n_column && n<=o; i++) {
+        for(int j = (n%m.n_row)+1; j <= m.n_row && n<=o; j++) {
+            (*m2)(k) = m(j,i);
+			n++;
+			k++;
+        }
+    }
+	
+	return (*m2);
+}
+
+Matrix& union_vector(Matrix &m1, Matrix &m2){
+	if (m1.n_row>1 || m2.n_row>1) {
+		cout << "error in union_vector\n";
+        exit(EXIT_FAILURE);
+	}
+	
+	Matrix *result = new Matrix(m1.n_column+m2.n_column);
+	
+	int i = 1;
+	
+    for(i; i <= m1.n_column; i++) {
+        (*result)(i) = m1(i);
+    }
+	
+	int j = i-1;
+	int k = 1;
+	
+	for(i; i <= j+m2.n_column; i++) {
+        (*result)(i) = m2(k);
+		k++;
+    }
+	
+	return (*result);
 }

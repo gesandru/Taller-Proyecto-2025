@@ -36,9 +36,12 @@ class Global{
 extern Matrix eopdata;
 extern Matrix Cnm;
 extern Matrix Snm;
+extern Matrix PC;
 
 void eop19620101(int c); //c = 21413
 
 void GGMO3S();
+
+void DE430Coeff();
 
 #endif

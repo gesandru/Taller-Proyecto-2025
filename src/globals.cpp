@@ -133,6 +133,26 @@ void Global::GGMO3S(int c){
 Param* Global::getParam(){
     return new Param();
 }
-
-Matrix *Global::PC;
 */
+
+Matrix PC;
+
+void DE430Coeff(){
+    PC = zeros(2285, 1020);
+
+    FILE *fid = fopen("../data/DE430Coeff.txt","r");
+    if(fid==NULL){
+        printf("Error al abrir el archivo DE430Coeff.txt");
+        exit(EXIT_FAILURE);
+    }
+
+    Matrix temp = zeros(6);
+
+	for(int j=1; j<=1020; j++){
+		for(int i=1; i<=2285; i++){
+			fscanf(fid,"%lf", &((PC)(i,j)));
+		}
+	}
+	
+fclose(fid);        
+}                   

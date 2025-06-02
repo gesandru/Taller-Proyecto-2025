@@ -33,10 +33,12 @@ public:
 	
 	// Non-member operators
 	friend ostream& operator << (ostream &o, Matrix &m);
+	friend Matrix& operator - (Matrix &m);
 };
 
 // Operator overloading
 ostream& operator << (ostream &o, Matrix &m);
+Matrix& operator - (Matrix &m);
 
 // Methods
 Matrix& zeros(const int n);
@@ -50,5 +52,7 @@ Matrix& inv(Matrix &m);
 Matrix& transpose(Matrix &m);
 double dot(Matrix &m1, Matrix &m2);
 double norm(Matrix &m);
+Matrix& extract_vector(Matrix &m, int n, int o);
+Matrix& union_vector(Matrix &m1, Matrix &m2);
 
 #endif

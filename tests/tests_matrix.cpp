@@ -116,6 +116,27 @@ int m_sub_02() {
     return 0;
 }
 
+int m_sub_03() {
+    int f = 3;
+    int c = 4;
+	
+	Matrix A(f, c);
+	A(1,1) = -4; A(1,2) =  2; A(1,3) = 8; A(1,4) = 0;
+	A(2,1) = 1; A(2,2) = -1; A(2,3) = 0; A(2,4) = 0;
+	A(3,1) = 0; A(3,2) =  1; A(3,3) = -9; A(3,4) = 5;
+	
+	Matrix B = -A;
+	
+	Matrix C(f, c);
+	C(1,1) = 4; C(1,2) =  -2; C(1,3) = -8; C(1,4) = 0;
+	C(2,1) = -1; C(2,2) = 1; C(2,3) = 0; C(2,4) = 0;
+	C(3,1) = 0; C(3,2) = -1; C(3,3) = 9; C(3,4) = -5;
+    
+    _assert(m_equals(B, C, 1e-10));
+    
+    return 0;
+}
+
 int m_mult_01() {
     int f = 3;
     int c = 4;
@@ -417,12 +438,49 @@ int m_norm_01() {
     return 0;
 }
 
+int m_extract_vector_01(){
+	
+	Matrix A(4, 3);
+	A(1,1) = 1; A(1,2) = 6; A(1,3) = 5;
+	A(2,1) = 3; A(2,2) = 1; A(2,3) = 4;
+	A(3,1) = 2; A(3,2) = 8; A(3,3) = 1;
+	A(4,1) = 3; A(4,2) = 7; A(4,3) = 9;
+	
+	Matrix B = extract_vector(A, 3, 6);
+	
+	Matrix C(4);
+	C(1) = 2; C(2) = 3; C(3) = 6; C(4) = 1;
+	
+	_assert(m_equals(B, C, 1e-10));
+	
+	return 0;
+}
+
+int m_union_vector_01(){
+	
+	Matrix A(3);
+	A(1) = 1; A(2) = 6; A(3) = 5;
+	
+	Matrix B(3);
+	B(1) = 3; B(2) = 1; B(3) = 4;
+	
+	Matrix C(6);
+	C(1) = 1; C(2) = 6; C(3) = 5; C(4) = 3; C(5) = 1; C(6) = 4;
+	
+	Matrix D = union_vector(A, B);
+	
+	_assert(m_equals(C, D, 1e-10));
+	
+	return 0;
+}
+
 int all_tests()
 {
     _verify(m_sum_01);
 	_verify(m_sum_02);
     _verify(m_sub_01);
 	_verify(m_sub_02);
+	_verify(m_sub_03);
 	_verify(m_mult_01);
 	_verify(m_mult_02);
 	_verify(m_div_01);
@@ -437,6 +495,8 @@ int all_tests()
 	_verify(m_transpose_01);
 	_verify(m_dot_01);
 	_verify(m_norm_01);
+	_verify(m_extract_vector_01);
+	_verify(m_union_vector_01);
 
     return 0;
 }

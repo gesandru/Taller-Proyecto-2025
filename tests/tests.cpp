@@ -25,6 +25,7 @@
 #include "../include/PrecMatrix.hpp"
 #include "../include/PoleMatrix.hpp"
 #include "../include/NutMatrix.hpp"
+#include "../include/JPL_Eph_DE430.hpp"
 
 using namespace std;
 
@@ -835,6 +836,100 @@ int NutMatrix_01() {
     return 0;
 }
 
+int JPL_Eph_DE430_01() {
+	
+	tuple<Matrix&,Matrix&,Matrix&,Matrix&,Matrix&,Matrix&,Matrix&,
+          Matrix&,Matrix&,Matrix&,Matrix&> result = JPL_Eph_DE430(4.974612369426725e+04);
+	Matrix A(3);
+	A(1) = 8.376063159543079e+10; A(2) = -6.528728168577818e+10; A(3) = -2.338739848225963e+10;
+	
+	Matrix r_Mercury = get<0>(result);
+
+    _assert(m_equals(transpose(A), r_Mercury, 1e-5));
+	
+	Matrix B(3);
+	B(1) = -1.521900864173088e+10; B(2) = -1.101414892042556e+11; B(3) = -4.102486602100102e+10;
+
+	
+	Matrix r_Venus = get<1>(result);
+
+    _assert(m_equals(transpose(B), r_Venus, 1e-4));
+	
+	Matrix C(3);
+	C(1) = -9.248135461759464e+10; C(2) = 1.063873743967772e+11; C(3) = 4.612686897997915e+10;
+
+	
+	Matrix r_Earth = get<2>(result);
+
+    _assert(m_equals(transpose(C), r_Earth, 1e-4));
+	
+	Matrix D(3);
+	D(1) = -8.827488712875351e+10; D(2) = 4.696603491496388e+10; D(3) = 2.907160326741814e+10;
+
+	
+	Matrix r_Mars = get<3>(result);
+
+    _assert(m_equals(transpose(D), r_Mars, 1e-5));
+	
+	Matrix E(3);
+	E(1) = -2.983706180685402e+11; E(2) = -7.544929849038118e+11; E(3) = -3.144083406370049e+11;
+
+	
+	Matrix r_Jupiter = get<4>(result);
+
+    _assert(m_equals(transpose(E), r_Jupiter, 1e-4));
+	
+	Matrix F(3);
+	F(1) = 1.482045333720998e+12; F(2) = -4.538615847620289e+11; F(3) = -2.493974621972664e+11;
+
+	
+	Matrix r_Saturn = get<5>(result);
+
+    _assert(m_equals(transpose(F), r_Saturn, 1e-4));
+	
+	Matrix G(3);
+	G(1) = 1.412381021799019e+12; G(2) = -2.511346390560052e+12; G(3) = -1.118104931691825e+12;
+
+	
+	Matrix r_Uranus = get<6>(result);
+
+    _assert(m_equals(transpose(G), r_Uranus, 1e-3));
+	
+	Matrix H(3);
+	H(1) = 1.412381021799019e+12; H(2) = -2.511346390560052e+12; H(3) = -1.118104931691825e+12;
+
+	
+	Matrix r_Neptune = get<7>(result);
+
+    _assert(m_equals(transpose(H), r_Neptune, 1e-3));
+	
+	Matrix I(3);
+	I(1) = -2.171402287905049e+12; I(2) = -3.915426845649372e+12; I(3) = -5.527140096587677e+11;
+
+	
+	Matrix r_Pluto = get<8>(result);
+
+    _assert(m_equals(transpose(I), r_Pluto, 1e-4));
+	
+	Matrix J(3);
+	J(1) = 8.984055391117921e+07; J(2) = -3.365104648184516e+08; J(3) = -1.145878714942212e+08;
+
+	
+	Matrix r_Moon = get<9>(result);
+
+    _assert(m_equals(transpose(J), r_Moon, 1e-8));
+	
+	Matrix K(3);
+	K(1) = 9.230863995551369e+10; K(2) = -1.053676510304489e+11; K(3) = -4.568309569598107e+10;
+
+	
+	Matrix r_Sun = get<10>(result);
+
+    _assert(m_equals(transpose(K), r_Sun, 1e-5));
+	
+    return 0;
+}
+
 int all_tests()
 {
     _verify(Rx_01);
@@ -868,6 +963,7 @@ int all_tests()
 	_verify(PrecMatrix_01);
 	_verify(PoleMatrix_01);
 	_verify(NutMatrix_01);
+	_verify(JPL_Eph_DE430_01);
 
     return 0;
 }
