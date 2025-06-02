@@ -50,7 +50,6 @@ double dt = Mjd_TDB - t1;
 Matrix temp(4);
 
 temp(1) = 231; temp(2) = 244; temp(3) = 257; temp(4) = 270;
-
 Matrix Cx_Earth = extract_vector(PCtemp,temp(1),temp(2)-1);
 Matrix Cy_Earth = extract_vector(PCtemp,temp(2),temp(3)-1);
 Matrix Cz_Earth = extract_vector(PCtemp,temp(3),temp(4)-1);

@@ -452,23 +452,16 @@ double norm(Matrix &m){
 }
 
 Matrix& extract_vector(Matrix &m, int n, int o){
-		if (n>o || m.n_row*m.n_column<n) {
+		if (n>o || n>m.n_column || o>m.n_column || m.n_row>1) {
 		cout << "error in extract_vector\n";
         exit(EXIT_FAILURE);
 	}
 	
 	Matrix *m2 = new Matrix(o+1-n);
 	
-	n=n-1;
-	o=o-1;
-	int k=1;
-	
-	for(int i = (n/m.n_row)+1; i <= m.n_column && n<=o; i++) {
-        for(int j = (n%m.n_row)+1; j < m.n_row && n<=o; j++) {
-            (*m2)(k) = m(j,i);
-			n++;
-			k++;
-        }
+	for(int i = 1; n<=o; i++) {
+		(*m2)(i) = m(n);
+		n++;
     }
 	
 	return (*m2);
