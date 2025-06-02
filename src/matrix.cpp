@@ -464,7 +464,7 @@ Matrix& extract_vector(Matrix &m, int n, int o){
 	int k=1;
 	
 	for(int i = (n/m.n_row)+1; i <= m.n_column && n<=o; i++) {
-        for(int j = (n%m.n_row)+1; j <= m.n_row && n<=o; j++) {
+        for(int j = (n%m.n_row)+1; j < m.n_row && n<=o; j++) {
             (*m2)(k) = m(j,i);
 			n++;
 			k++;

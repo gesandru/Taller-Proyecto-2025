@@ -11,8 +11,8 @@ if ( (t<Ta) || (Tb<t) ){
 //Clenshaw algorithm
 double tau = (2.0*t-Ta-Tb)/(Tb-Ta);  
 
-Matrix f1 = zeros(1,3);
-Matrix f2 = zeros(1,3);
+Matrix f1 = zeros(3);
+Matrix f2 = zeros(3);
 
 Matrix &old_f1 = zeros(1);
 Matrix &auxiliar = zeros(3);

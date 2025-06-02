@@ -61,17 +61,13 @@ Matrix Cx = extract_vector(PCtemp,temp(1),temp(2)-1);
 Matrix Cy = extract_vector(PCtemp,temp(2),temp(3)-1);
 Matrix Cz = extract_vector(PCtemp,temp(3),temp(4)-1);
 
-cout << dt << " " << Cx_Earth.n_row << " " << Cx_Earth.n_column << " " << Cy_Earth.n_row << " " << Cy_Earth.n_column << " " << Cz_Earth.n_row << " " << Cz_Earth.n_column << endl;
-
-cout << Cx.n_row << " " << Cx.n_column << " " << Cy.n_row << " " << Cy.n_column << " " << Cz.n_row << " " << Cz.n_column << endl;
-
 Cx_Earth = union_vector(Cx_Earth,Cx);
 Cy_Earth = union_vector(Cy_Earth,Cy);
 Cz_Earth = union_vector(Cz_Earth,Cz);    
 
 double Mjd0;
 
-//El problema está aquí, dt es muy grande y no se asigna a 0 ó 1
+
 if (0<=dt && dt<=16){
     j=0;
     Mjd0 = t1;
@@ -79,11 +75,19 @@ if (0<=dt && dt<=16){
     j=1;
     Mjd0 = t1+16*j;
 }
-	
-	cout << 13*j+1 << " " << Cx_Earth.n_row << " " << Cx_Earth.n_column << " " << Cy_Earth.n_row << " " << Cy_Earth.n_column << " " << Cz_Earth.n_row << " " << Cz_Earth.n_column << endl;
 
-Matrix r_Earth = Cheb3D(Mjd_TDB, 13, Mjd0, Mjd0+16, extract_vector(Cx_Earth,13*j+1,13*j+13),
-                     extract_vector(Cy_Earth,13*j+1,13*j+13), transpose(extract_vector(Cz_Earth,13*j+1,13*j+13)))*1e3;
+cout << "test1 "  << PCtemp(1) << " " << t1 << endl;
+
+Matrix test1 = extract_vector(Cx_Earth,13*j+1,13*j+13);
+Matrix test2 = extract_vector(Cy_Earth,13*j+1,13*j+13);
+Matrix test3 = transpose(extract_vector(Cz_Earth,13*j+1,13*j+13));
+
+cout << "test2" << endl;
+
+Matrix r_Earth = Cheb3D(Mjd_TDB, 13, Mjd0, Mjd0+16, test1,
+                     test2, test3)*1e3;
+					 
+					 cout << "test3" << endl;
 
 temp(1) = 441; temp(2) = 454; temp(3) = 467; temp(4) = 480;
 

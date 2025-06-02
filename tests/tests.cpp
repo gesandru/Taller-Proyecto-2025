@@ -26,6 +26,7 @@
 #include "../include/PoleMatrix.hpp"
 #include "../include/NutMatrix.hpp"
 #include "../include/JPL_Eph_DE430.hpp"
+#include "../include/gast.hpp"
 
 using namespace std;
 
@@ -836,6 +837,7 @@ int NutMatrix_01() {
     return 0;
 }
 
+
 int JPL_Eph_DE430_01() {
 	
 	tuple<Matrix&,Matrix&,Matrix&,Matrix&,Matrix&,Matrix&,Matrix&,
@@ -930,6 +932,26 @@ int JPL_Eph_DE430_01() {
     return 0;
 }
 
+
+int gast_01() {
+	
+	int i;
+	
+	double theta = 3.005015202091811;
+	double result = gast(4.974612298988087e+04); 
+		
+	if(fabs(result-theta) > 1e-10) {
+		printf("%2.20lf %2.20lf\n",result,theta);
+		i=0;
+	}else{
+		i=1;
+	}
+    
+    _assert(i);
+	
+    return 0;
+}
+
 int all_tests()
 {
     _verify(Rx_01);
@@ -964,7 +986,7 @@ int all_tests()
 	_verify(PoleMatrix_01);
 	_verify(NutMatrix_01);
 	_verify(JPL_Eph_DE430_01);
-
+	_verify(gast_01);
     return 0;
 }
 

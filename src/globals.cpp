@@ -148,8 +148,8 @@ void DE430Coeff(){
 
     Matrix temp = zeros(6);
 
-	for(int j=1; j<=1020; j++){
-		for(int i=1; i<=2285; i++){
+	for(int i=1; i<=2285; i++){
+		for(int j=1; j<=1020; j++){
 			fscanf(fid,"%lf", &((PC)(i,j)));
 		}
 	}
