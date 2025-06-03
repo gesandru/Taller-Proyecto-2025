@@ -17,6 +17,8 @@ typedef struct{
     double Mjd_UTC, Mjd_TT;
     int n, m, sun, moon, planets;
 } Param;
+
+extern Param AuxParam;
 /*
 class Global{
     public:

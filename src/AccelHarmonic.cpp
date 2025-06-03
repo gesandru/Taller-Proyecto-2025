@@ -6,10 +6,8 @@ Matrix& AccelHarmonic(Matrix &r, Matrix &E, const int n_max, const int m_max){
 
 double r_ref = 6378.1363e3;   // Earth's radius [m]; GGM03S
 double gm    = 398600.4415e9; // [m^3/s^2]; GGM03S
-
 // Body-fixed position 
 Matrix &r_bf = E * r;
-
 r_bf = transpose(r_bf);
 
 // Auxiliary quantities
