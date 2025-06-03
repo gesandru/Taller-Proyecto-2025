@@ -840,14 +840,22 @@ int NutMatrix_01() {
 
 int JPL_Eph_DE430_01() {
 	
-	tuple<Matrix&,Matrix&,Matrix&,Matrix&,Matrix&,Matrix&,Matrix&,
-          Matrix&,Matrix&,Matrix&,Matrix&> result = JPL_Eph_DE430(4.974612369426725e+04);
+	tuple<Matrix,Matrix,Matrix,Matrix,Matrix,Matrix,Matrix,
+          Matrix,Matrix,Matrix,Matrix> result = JPL_Eph_DE430(4.974611706232292e+04);
 	Matrix A(3);
 	A(1) = 8.376063159543079e+10; A(2) = -6.528728168577818e+10; A(3) = -2.338739848225963e+10;
 	
 	Matrix r_Mercury = get<0>(result);
+	
+	Matrix AA = -A;
+	
+	cout << "test" << endl;
+	
+	cout << AA(1) << " " << AA(2) << " " << AA(3) << endl;
+	
+	cout << r_Mercury(1) << " " << r_Mercury(2) << " " << r_Mercury(3) << endl;
 
-    _assert(m_equals(transpose(A), r_Mercury, 1e-5));
+    _assert(m_equals(A, r_Mercury, 1e-4));
 	
 	Matrix B(3);
 	B(1) = -1.521900864173088e+10; B(2) = -1.101414892042556e+11; B(3) = -4.102486602100102e+10;

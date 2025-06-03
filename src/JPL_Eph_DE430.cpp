@@ -75,18 +75,8 @@ if (0<=dt && dt<=16){
     Mjd0 = t1+16*j;
 }
 
-cout << "test1 "  << PCtemp(1) << " " << t1 << endl;
-
-Matrix test1 = extract_vector(Cx_Earth,13*j+1,13*j+13);
-Matrix test2 = extract_vector(Cy_Earth,13*j+1,13*j+13);
-Matrix test3 = transpose(extract_vector(Cz_Earth,13*j+1,13*j+13));
-
-cout << "test2" << endl;
-
-Matrix r_Earth = Cheb3D(Mjd_TDB, 13, Mjd0, Mjd0+16, test1,
-                     test2, test3)*1e3;
-					 
-					 cout << "test3" << endl;
+Matrix r_Earth = Cheb3D(Mjd_TDB, 13, Mjd0, Mjd0+16, extract_vector(Cx_Earth,13*j+1,13*j+13),
+                     extract_vector(Cy_Earth,13*j+1,13*j+13), extract_vector(Cz_Earth,13*j+1,13*j+13))*1e3;
 
 temp(1) = 441; temp(2) = 454; temp(3) = 467; temp(4) = 480;
 
@@ -130,7 +120,7 @@ if (0<=dt && dt<=4){
     Mjd0 = t1+4*j;
 }
 Matrix r_Moon = Cheb3D(Mjd_TDB, 13, Mjd0, Mjd0+4, extract_vector(Cx_Moon,13*j+1,13*j+13),
-                     extract_vector(Cy_Moon,13*j+1,13*j+13), transpose(extract_vector(Cz_Moon,13*j+1,13*j+13)))*1e3;
+                     extract_vector(Cy_Moon,13*j+1,13*j+13), extract_vector(Cz_Moon,13*j+1,13*j+13))*1e3;
 
 temp(1) = 753; temp(2) = 764; temp(3) = 775; temp(4) = 786;
 
@@ -155,7 +145,7 @@ if (0<=dt && dt<=16){
     Mjd0 = t1+16*j;
 }
 Matrix r_Sun = Cheb3D(Mjd_TDB, 11, Mjd0, Mjd0+16, extract_vector(Cx_Sun,11*j+1,11*j+11),
-                     extract_vector(Cy_Sun,11*j+1,11*j+11), transpose(extract_vector(Cz_Sun,11*j+1,11*j+11)))*1e3;
+                     extract_vector(Cy_Sun,11*j+1,11*j+11), extract_vector(Cz_Sun,11*j+1,11*j+11))*1e3;
 
 temp(1) = 3; temp(2) = 17; temp(3) = 31; temp(4) = 45;
 
@@ -172,6 +162,8 @@ Cy_Mercury = union_vector(Cy_Mercury,Cy);
 Cz_Mercury = union_vector(Cz_Mercury,Cz);    
 }
 
+
+
 if (0<=dt && dt<=8){
     j=0;
     Mjd0 = t1;
@@ -186,7 +178,7 @@ if (0<=dt && dt<=8){
     Mjd0 = t1+8*j;
 }
 Matrix r_Mercury = Cheb3D(Mjd_TDB, 14, Mjd0, Mjd0+8, extract_vector(Cx_Mercury,14*j+1,14*j+14),
-                     extract_vector(Cy_Mercury,14*j+1,14*j+14), transpose(extract_vector(Cz_Mercury,14*j+1,14*j+14)))*1e3;
+                     extract_vector(Cy_Mercury,14*j+1,14*j+14), extract_vector(Cz_Mercury,14*j+1,14*j+14))*1e3;
 
 temp(1) = 171; temp(2) = 181; temp(3) = 191; temp(4) = 201;
 
@@ -211,7 +203,7 @@ if (0<=dt && dt<=16){
     Mjd0 = t1+16*j;
 }
 Matrix r_Venus = Cheb3D(Mjd_TDB, 10, Mjd0, Mjd0+16, extract_vector(Cx_Venus,10*j+1,10*j+10),
-                     extract_vector(Cy_Venus,10*j+1,10*j+10), transpose(extract_vector(Cz_Venus,10*j+1,10*j+10)))*1e3;
+                     extract_vector(Cy_Venus,10*j+1,10*j+10), extract_vector(Cz_Venus,10*j+1,10*j+10))*1e3;
 
 temp(1) = 309; temp(2) = 320; temp(3) = 331; temp(4) = 342;
 
@@ -221,7 +213,7 @@ Matrix Cz_Mars = extract_vector(PCtemp,temp(3),temp(4)-1);
 j=0;
 Mjd0 = t1;
 Matrix r_Mars = Cheb3D(Mjd_TDB, 11, Mjd0, Mjd0+32, extract_vector(Cx_Mars,11*j+1,11*j+11),
-                     extract_vector(Cy_Mars,11*j+1,11*j+11), transpose(extract_vector(Cz_Mars,11*j+1,11*j+11)))*1e3;
+                     extract_vector(Cy_Mars,11*j+1,11*j+11), extract_vector(Cz_Mars,11*j+1,11*j+11))*1e3;
 
 temp(1) = 342; temp(2) = 350; temp(3) = 358; temp(4) = 366;
 
@@ -231,7 +223,7 @@ Matrix Cz_Jupiter = extract_vector(PCtemp,temp(3),temp(4)-1);
 j=0;
 Mjd0 = t1;
 Matrix r_Jupiter = Cheb3D(Mjd_TDB, 8, Mjd0, Mjd0+32, extract_vector(Cx_Jupiter,8*j+1,8*j+8),
-                     extract_vector(Cy_Jupiter,8*j+1,8*j+8), transpose(extract_vector(Cz_Jupiter,8*j+1,8*j+8)))*1e3;
+                     extract_vector(Cy_Jupiter,8*j+1,8*j+8), extract_vector(Cz_Jupiter,8*j+1,8*j+8))*1e3;
 
 temp(1) = 366; temp(2) = 373; temp(3) = 380; temp(4) = 387;
 
@@ -241,7 +233,7 @@ Matrix Cz_Saturn = extract_vector(PCtemp,temp(3),temp(4)-1);
 j=0;
 Mjd0 = t1;
 Matrix r_Saturn = Cheb3D(Mjd_TDB, 7, Mjd0, Mjd0+32, extract_vector(Cx_Saturn,7*j+1,7*j+7),
-                     extract_vector(Cy_Saturn,7*j+1,7*j+7), transpose(extract_vector(Cz_Saturn,7*j+1,7*j+7)))*1e3;
+                     extract_vector(Cy_Saturn,7*j+1,7*j+7), extract_vector(Cz_Saturn,7*j+1,7*j+7))*1e3;
 
 temp(1) = 387; temp(2) = 393; temp(3) = 399; temp(4) = 405;
 
@@ -251,7 +243,7 @@ Matrix Cz_Uranus = extract_vector(PCtemp,temp(3),temp(4)-1);
 j=0;
 Mjd0 = t1;
 Matrix r_Uranus = Cheb3D(Mjd_TDB, 6, Mjd0, Mjd0+32, extract_vector(Cx_Uranus,6*j+1,6*j+6),
-                     extract_vector(Cy_Uranus,6*j+1,6*j+6), transpose(extract_vector(Cz_Uranus,6*j+1,6*j+6)))*1e3;
+                     extract_vector(Cy_Uranus,6*j+1,6*j+6), extract_vector(Cz_Uranus,6*j+1,6*j+6))*1e3;
 
 temp(1) = 405; temp(2) = 411; temp(3) = 417; temp(4) = 423;
 
@@ -261,7 +253,7 @@ Matrix Cz_Neptune = extract_vector(PCtemp,temp(3),temp(4)-1);
 j=0;
 Mjd0 = t1;
 Matrix r_Neptune = Cheb3D(Mjd_TDB, 6, Mjd0, Mjd0+32, extract_vector(Cx_Neptune,6*j+1,6*j+6),
-                     extract_vector(Cy_Neptune,6*j+1,6*j+6), transpose(extract_vector(Cz_Neptune,6*j+1,6*j+6)))*1e3;
+                     extract_vector(Cy_Neptune,6*j+1,6*j+6), extract_vector(Cz_Neptune,6*j+1,6*j+6))*1e3;
 
 temp(1) = 423; temp(2) = 429; temp(3) = 435; temp(4) = 441;
 
@@ -271,7 +263,7 @@ Matrix Cz_Pluto = extract_vector(PCtemp,temp(3),temp(4)-1);
 j=0;
 Mjd0 = t1;
 Matrix r_Pluto = Cheb3D(Mjd_TDB, 6, Mjd0, Mjd0+32, extract_vector(Cx_Pluto,6*j+1,6*j+6),
-                     extract_vector(Cy_Pluto,6*j+1,6*j+6), transpose(extract_vector(Cz_Pluto,6*j+1,6*j+6)))*1e3;
+                     extract_vector(Cy_Pluto,6*j+1,6*j+6), extract_vector(Cz_Pluto,6*j+1,6*j+6))*1e3;
 
 temp(1) = 819; temp(2) = 829; temp(3) = 839;
 
@@ -297,8 +289,11 @@ if (0<=dt && dt<=8){
     j=3;
     Mjd0 = t1+8*j;
 }
+
+
+
 Matrix Nutations = Cheb3D(Mjd_TDB, 10, Mjd0, Mjd0+8, extract_vector(Cx_Nutations,10*j+1,10*j+10),
-                   extract_vector(Cy_Nutations,10*j+1,10*j+10),transpose(zeros(10,1)));
+                   extract_vector(Cy_Nutations,10*j+1,10*j+10),zeros(10));
 
 temp(1) = 899; temp(2) = 909; temp(3) = 919; temp(4) = 929;
 
@@ -327,8 +322,9 @@ if (0<=dt && dt<=8){
     j=3;
     Mjd0 = t1+8*j;
 }
+
 Matrix Librations = Cheb3D(Mjd_TDB, 10, Mjd0, Mjd0+8, extract_vector(Cx_Librations,10*j+1,10*j+10),
-                     extract_vector(Cy_Librations,10*j+1,10*j+10), transpose(extract_vector(Cz_Librations,10*j+1,10*j+10)));
+                     extract_vector(Cy_Librations,10*j+1,10*j+10), extract_vector(Cz_Librations,10*j+1,10*j+10));
 double EMRAT = 81.30056907419062; // DE430
 double EMRAT1 = 1/(1+EMRAT);
 r_Earth = r_Earth-(r_Moon*EMRAT1);
@@ -341,6 +337,8 @@ r_Uranus = -r_Earth+r_Uranus;
 r_Neptune = -r_Earth+r_Neptune;
 r_Pluto = -r_Earth+r_Pluto;
 r_Sun = -r_Earth+r_Sun;
+
+	cout << r_Mercury(1) << " " << r_Mercury(2) << " " << r_Mercury(3) << endl;
 
 return tie(r_Mercury,r_Venus,r_Earth,r_Mars,r_Jupiter,r_Saturn,r_Uranus,
           r_Neptune,r_Pluto,r_Moon,r_Sun);
