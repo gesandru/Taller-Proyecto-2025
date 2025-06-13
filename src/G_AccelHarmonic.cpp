@@ -11,6 +11,7 @@ Matrix da;
 // Gradient
 for (int i = 1; i<=3;i++){
     // Set offset in i-th component of the position vector
+	dr = zeros(3,1);
     dr(i,1) = d;
     // Acceleration difference
     da = AccelHarmonic( r+(dr/2.0),U, n_max, m_max ) -

@@ -6,6 +6,6 @@
 #include "../include/R_z.hpp"
 #include <cmath>
 
-        Matrix GHAMatrix (double Mjd_UT1);
+        Matrix& GHAMatrix (double Mjd_UT1);
 
 #endif

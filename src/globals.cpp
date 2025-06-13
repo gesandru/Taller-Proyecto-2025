@@ -2,6 +2,18 @@
 
 using namespace std;
 
+Param AuxParam;
+
+void AParam(){
+	AuxParam.Mjd_UTC = 0;
+	AuxParam.n = 0;
+	AuxParam.m = 0;
+	AuxParam.sun = 0;
+	AuxParam.moon = 0;
+	AuxParam.planets = 0;
+	AuxParam.Mjd_TT = 0;
+}
+
     Matrix eopdata;
 
     void eop19620101(int c){

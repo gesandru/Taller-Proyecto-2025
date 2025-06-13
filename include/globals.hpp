@@ -3,22 +3,25 @@
 
 #include "../include/Matrix.hpp"
 #include <cmath>
-/*
+
 #include <cstdio>
 #include <cstdlib>
 #include <string>
 #include <stdio.h>
 #include <cstring>
-*/
+
 
 //lo mismo haremos con GEOS3 y con GGMO3S
 
-typedef struct{
+struct Param{
     double Mjd_UTC, Mjd_TT;
     int n, m, sun, moon, planets;
-} Param;
+};
 
 extern Param AuxParam;
+
+void AParam();
+
 /*
 class Global{
     public:
