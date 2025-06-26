@@ -1,6 +1,6 @@
 #include "../include/VarEqn.hpp"
 
-Matrix  VarEqn(double x, Matrix yPhi){
+Matrix& VarEqn(double x, Matrix yPhi){
 	
 tuple< double, double, double, double, double, double, double, double, double> result = IERS(eopdata,AuxParam.Mjd_UTC,'l');
 
@@ -48,7 +48,7 @@ Matrix a = AccelHarmonic( r, E, AuxParam.n, AuxParam.m );
 Matrix G = G_AccelHarmonic( r, E, AuxParam.n, AuxParam.m );
 
 // Time derivative of state transition matrix
-Matrix yPhip = zeros(42);
+Matrix& yPhip = zeros(42);
 Matrix dfdy = zeros(6, 6);
 
 for(int i = 1; i<=3;i++){

@@ -45,45 +45,6 @@ fscanf(fid,"%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf",
 fclose(fid);
 }
 
-/*
-Matrix *Global::obs;
-
-void Global::GEOS3(){
-    Global::obs = new Matrix(46, 4);
-
-    FILE* fid = fopen("../data/GEOS3.txt","r");
-    if(fid==nullptr){
-        printf("Error al abrir el archivo");
-        exit(EXIT_FAILURE);
-    }
-
-    char* auxi;
-    const char *tline;
-    double Y, M, D, h, m, s, az, el, Dist;
-
-    for (int i=0; i<=45; i++){
-            fgets (auxi, 100 , fid);
-        //no entiendo porqué esto no se castea a const char* aquí
-            tline = reinterpret_cast<const char *>(auxi);
-            Y = atof(reinterpret_cast<const char *>(tline[0, 1, 2, 3]));
-            M = atof(reinterpret_cast<const char *>(tline[5, 6]));
-            D = atof(reinterpret_cast<const char *>(tline[8, 9]));
-            h = atof(reinterpret_cast<const char *>(tline[12, 13]));
-            m = atof(reinterpret_cast<const char *>(tline[15, 16]));
-            s = atof(reinterpret_cast<const char *>(tline[18, 19, 20, 21, 22, 23]));
-            az = atof(reinterpret_cast<const char *>(tline[25, 26, 27, 28, 29, 30, 31, 32]));
-            el = atof(reinterpret_cast<const char *>(tline[35, 36, 37, 38, 39, 40, 41]));
-            Dist = atof(reinterpret_cast<const char *>(tline[44, 45, 46, 47, 48, 49, 50, 51, 52, 53]));
-            Global::obs[i, 0] = Mjday::mjday(Y, M, D, h, m, s);
-            Global::obs[i, 1] = Const::Rad*az;
-            Global::obs[i, 2] = Const::Rad*el;
-        Global::obs[i, 3] = 1e3*Dist;
-    }
-
-    fclose(fid);
-}
-*/
-
 Matrix Cnm;
 Matrix Snm;
 
@@ -117,36 +78,6 @@ void GGMO3S(){
 
 }
 
-/*
-void Global::GGMO3S(int c){
-    Global::GGMO3Sdata = new Matrix(6, c);
-
-    FILE* fid = fopen("../data/GGMO3S.txt","r");
-    if(fid==nullptr){
-        printf("Error al abrir el archivo");
-        exit(EXIT_FAILURE);
-    }
-
-    for(int i=1; i<=c; i++){
-        fscanf(fid,"%lf %lf %lf %lf %lf %lf",
-               &((*Global::GGMO3Sdata)(1,i)),
-               &((*Global::GGMO3Sdata)(2,i)),
-               &((*Global::GGMO3Sdata)(3,i)),
-               &((*Global::GGMO3Sdata)(4,i)),
-               &((*Global::GGMO3Sdata)(5,i)),
-               &((*Global::GGMO3Sdata)(6,i)));
-    }
-
-    fclose(fid);
-
-}
- */
-/*
-Param* Global::getParam(){
-    return new Param();
-}
-*/
-
 Matrix PC;
 
 void DE430Coeff(){
@@ -167,4 +98,39 @@ void DE430Coeff(){
 	}
 	
 fclose(fid);        
-}                   
+}
+
+Matrix obs;
+
+void GEOS3(int f){
+    obs = zeros(f, 4);
+
+ifstream fid("../data/GEOS3.txt");
+        if(!fid){
+            printf("Error al abrir el archivo GEOS3");
+            exit(EXIT_FAILURE);
+        }
+		
+string tline;
+int Y, M, D, h, m, s;
+double az, el, Dist; 
+
+for(int i=1; i<=f; i++){
+    getline(fid, tline);
+    Y = stoi(tline.substr(0,4));
+    M = stoi(tline.substr(5,2));
+    D = stoi(tline.substr(8,2));
+    h = stoi(tline.substr(12,2));
+    m = stoi(tline.substr(15,2));
+    s = stoi(tline.substr(18,6));
+    az = stod(tline.substr(25,8));
+    el = stod(tline.substr(35,7));
+    Dist = stod(tline.substr(44,10));
+    obs(i,1) = Mjday(Y,M,D,h,m,s);
+    obs(i,2) = Const::Rad*az;
+    obs(i,3) = Const::Rad*el;
+    obs(i,4) = 1e3*Dist;
+}
+
+fid.close();      
+}

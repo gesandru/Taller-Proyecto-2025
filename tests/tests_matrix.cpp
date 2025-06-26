@@ -1,3 +1,10 @@
+/**
+ * @file tests_matrix.cpp
+ * @brief Archivo de tests unitarios de las funciones de Matrix
+ *
+ * @author George
+ */
+
 #include "..\include\Matrix.hpp"
 #include <cstdio>
 #include <cmath>
@@ -440,16 +447,13 @@ int m_norm_01() {
 
 int m_extract_vector_01(){
 	
-	Matrix A(4, 3);
-	A(1,1) = 1; A(1,2) = 6; A(1,3) = 5;
-	A(2,1) = 3; A(2,2) = 1; A(2,3) = 4;
-	A(3,1) = 2; A(3,2) = 8; A(3,3) = 1;
-	A(4,1) = 3; A(4,2) = 7; A(4,3) = 9;
+	Matrix A(4);
+	A(1) = 1; A(2) = 6; A(3) = 5; A(4) = 3;
 	
-	Matrix B = extract_vector(A, 3, 6);
+	Matrix B = extract_vector(A, 2, 3);
 	
-	Matrix C(4);
-	C(1) = 2; C(2) = 3; C(3) = 6; C(4) = 1;
+	Matrix C(2);
+	C(1) = 6; C(2) = 5;
 	
 	_assert(m_equals(B, C, 1e-10));
 	

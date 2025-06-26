@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Matrix DEInteg(Matrix& (*func)(double, Matrix),double t,double tout,double relerr,
+Matrix& DEInteg(Matrix& (*func)(double, Matrix),double t,double tout,double relerr,
                           double abserr,int n_eqn,Matrix y) {
 
     int ki = 0, kold = 0, ifail, k, kp1, kp2, km1, km2, ns, nsp1, nsp2, nsm2, i, ip1, im1, limit1, limit2,
@@ -11,7 +11,7 @@ Matrix DEInteg(Matrix& (*func)(double, Matrix),double t,double tout,double reler
             temp6, term, tau, erkm2, erkm1, erk, erkp1, err, temp1, rhodouble, r, h;
     bool crash, phase1, nornd, success;
 	
-	Matrix phi1, y0 = y, yout, ypout;
+	Matrix& y0 = y, yout, ypout;
 
     //double epsd = std::numeric_limits<double>::epsilon();
 
@@ -52,6 +52,7 @@ Matrix DEInteg(Matrix& (*func)(double, Matrix),double t,double tout,double reler
     Matrix p = zeros(n_eqn);
     Matrix yp = zeros(n_eqn);
     Matrix phi = zeros(n_eqn, 17);
+	Matrix phi1 = zeros(n_eqn);
     Matrix g = zeros(14);
     Matrix sig = zeros(14);
     Matrix rho = zeros(14);
@@ -117,8 +118,8 @@ Matrix DEInteg(Matrix& (*func)(double, Matrix),double t,double tout,double reler
 
 // If already past output point, interpolate solution and return
         if (abs(x - t) >= absdel) {
-            yout = zeros(n_eqn, 1);
-            ypout = zeros(n_eqn, 1);
+            yout = zeros(n_eqn);
+            ypout = zeros(n_eqn);
             g(2) = 1.0;
             rho(2) = 1.0;
             hi = tout - x;
@@ -145,9 +146,6 @@ Matrix DEInteg(Matrix& (*func)(double, Matrix),double t,double tout,double reler
 
 // Interpolate for the solution yout and for
 // the derivative of the solution ypout
-
-			//keep testing from here
-			cout << i << endl;
             for (int j = 1; j <= ki; j++) {
 				i = ki+1-j;
 				for(int iaux = 1; iaux<=n_eqn; iaux++){

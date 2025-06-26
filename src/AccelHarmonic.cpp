@@ -2,7 +2,7 @@
 
 Matrix& AccelHarmonic(Matrix &r, Matrix &E, const int n_max, const int m_max){
 
-
+Matrix pnm, dpnm;
 
 double r_ref = 6378.1363e3;   // Earth's radius [m]; GGM03S
 double gm    = 398600.4415e9; // [m^3/s^2]; GGM03S
@@ -15,10 +15,9 @@ double d = norm(r_bf);                     // distance
 double latgc = asin(r_bf(3)/d);
 double lon = atan2(r_bf(2),r_bf(1));
 
-auto[pnm, dpnm] = Legendre( n_max,m_max,latgc);
-
-
-GGMO3S();
+tuple<Matrix, Matrix> result = Legendre( n_max,m_max,latgc);
+pnm = get<0>(result);
+dpnm = get<1>(result);
 
 double dUdr = 0.0;
 double dUdlatgc = 0.0;

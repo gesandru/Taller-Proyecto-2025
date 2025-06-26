@@ -1,0 +1,26 @@
+<map id="include/AccelHarmonic.hpp" name="include/AccelHarmonic.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="411,5,592,32"/>
+<area shape="rect" id="Node000002" href="$_accel_8hpp.html" title=" " alt="" coords="148,155,273,181"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="460,41,372,82,234,156,231,152,369,78,458,36"/>
+<area shape="rect" id="Node000005" href="$tests_8cpp.html" title="Archivo de tests unitarios de la aplicación." alt="" coords="446,229,554,256"/>
+<area shape="poly" id="edge14_Node000001_Node000005" title=" " alt="" coords="555,35,614,60,669,94,690,114,703,135,705,159,694,183,665,210,629,228,591,239,555,243,554,238,590,233,628,223,662,206,690,180,700,158,697,137,685,117,666,98,611,65,553,40"/>
+<area shape="rect" id="Node000006" href="$_g___accel_harmonic_8hpp.html" title=" " alt="" coords="403,80,600,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="504,48,504,80,499,80,499,48"/>
+<area shape="rect" id="Node000007" href="$_var_eqn_8hpp.html" title=" " alt="" coords="299,155,432,181"/>
+<area shape="poly" id="edge12_Node000001_Node000007" title=" " alt="" coords="449,41,419,58,393,82,382,99,375,119,369,155,363,154,370,118,377,97,389,78,416,54,447,36"/>
+<area shape="rect" id="Node000010" href="$_accel_harmonic_8cpp.html" title=" " alt="" coords="755,80,912,107"/>
+<area shape="poly" id="edge13_Node000001_Node000010" title=" " alt="" coords="575,33,776,77,775,82,574,38"/>
+<area shape="rect" id="Node000003" href="$_accel_8cpp.html" title=" " alt="" coords="5,229,107,256"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="171,191,84,231,82,226,169,186"/>
+<area shape="rect" id="Node000004" href="$_e_k_f___g_e_o_s3_8cpp.html" title="Archivo principal y de test completo de la aplicación." alt="" coords="131,229,288,256"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="213,197,212,229,207,229,207,197"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="276,183,450,226,449,231,275,188"/>
+<area shape="poly" id="edge11_Node000006_Node000005" title=" " alt="" coords="500,122,497,155,498,195,501,229,496,229,493,196,492,155,495,122"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="465,117,390,156,388,152,463,112"/>
+<area shape="rect" id="Node000009" href="$_g___accel_harmonic_8cpp.html" title=" " alt="" coords="506,155,680,181"/>
+<area shape="poly" id="edge10_Node000006_Node000009" title=" " alt="" coords="531,114,579,152,576,156,527,119"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="326,191,238,231,236,226,323,186"/>
+<area shape="poly" id="edge9_Node000007_Node000005" title=" " alt="" coords="403,187,478,226,475,231,401,191"/>
+<area shape="rect" id="Node000008" href="$_var_eqn_8cpp.html" title=" " alt="" coords="312,229,422,256"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="369,197,369,229,364,229,363,197"/>
+</map>

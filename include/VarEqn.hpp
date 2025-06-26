@@ -15,6 +15,6 @@
 #include <cmath>
 #include <tuple>
 
-        Matrix VarEqn(double x, Matrix yPhi);
+        Matrix& VarEqn(double x, Matrix yPhi);
 
 #endif

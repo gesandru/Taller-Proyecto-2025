@@ -1,3 +1,12 @@
+/**
+ * @file const.hpp
+ * @brief variables globales
+ *
+ * @author George
+ *
+ * @note El archivo contiene variables que son usadas a lo largo de todo el proyecto 
+ */
+
 #ifndef _CONST_
 #define _CONST_
 
